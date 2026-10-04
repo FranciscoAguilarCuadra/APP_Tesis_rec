@@ -1,183 +1,102 @@
-# ♻️ RecyclAIDeep - Aplicación de Reciclaje Inteligente
+# RecyclAIDeep — Aplicación de Reciclaje Inteligente
 
-Una aplicación móvil que utiliza inteligencia artificial para detectar y clasificar residuos reciclables mediante visión por computadora.
+> Aplicación móvil que utiliza inteligencia artificial para detectar y clasificar residuos reciclables mediante visión por computadora.
+> Proyecto desarrollado como parte de la **tesis profesional** en Ingeniería Civil Informático, Universidad del Bío-Bío.
 
-## � Características
+[![React Native](https://img.shields.io/badge/React_Native-61DAFB?style=flat-square&logo=react&logoColor=black)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-000000?style=flat-square&logo=expo&logoColor=white)](https://expo.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![YOLOv5](https://img.shields.io/badge/YOLOv5-1a73e8?style=flat-square)](https://github.com/ultralytics/yolov5)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-- **Detección en tiempo real**: Usa la cámara para identificar residuos reciclables
-- **Clasificación inteligente**: Detecta botellas, latas, cajas, papel, vidrio y más
-- **Modo Online/Offline**: Funciona con API backend o modelo local
-- **Mapa de puntos limpios**: Encuentra centros de reciclaje cercanos
-- **Sistema de recompensas**: Gamificación para incentivar el reciclaje
-- **Interfaz moderna**: UI/UX optimizada con React Native y Expo
+<!--
+## Capturas
+Coloca las imágenes en `docs/screenshots/` y descomenta:
 
-## 🛠️ Tecnologías
+![Detección en tiempo real](docs/screenshots/deteccion.png)
+![Mapa de puntos limpios](docs/screenshots/mapa.png)
+![Resultado y recompensa](docs/screenshots/resultado.png)
+-->
+
+---
+
+## Características
+
+- **Detección en tiempo real:** usa la cámara para identificar residuos reciclables.
+- **Clasificación inteligente:** detecta botellas, latas, cajas, papel, vidrio y más (6 clases: cartón, metal, papel, pilas, plástico, vidrio).
+- **Modo Online/Offline:** funciona contra la API backend o con el modelo local en el dispositivo.
+- **Mapa de puntos limpios:** encuentra centros de reciclaje cercanos.
+- **Sistema de recompensas:** gamificación para incentivar el reciclaje.
+- **Interfaz moderna:** UI/UX con React Native, Expo Router y Tailwind (NativeWind).
+
+## Stack tecnológico
 
 ### Frontend
 - **React Native** con Expo Router
 - **TypeScript** para tipado seguro
-- **TensorFlow.js** para predicción offline
+- **TensorFlow.js / TFLite** para predicción offline en el dispositivo
 - **React Native Maps** para geolocalización
 - **Expo Camera** para captura de imágenes
 
-### Backend
-- **FastAPI** (Python) para API REST
-- **YOLOv5** para detección de objetos
-- **PyTorch** para procesamiento de ML
-- **OpenCV** para procesamiento de imágenes
+### Backend (modo online)
+- **FastAPI** (Python) como API REST
+- **YOLOv5** para detección de objetos (entrenamiento en [Repositorio_Tesis](https://github.com/FranciscoAguilarCuadra/Repositorio_Tesis))
+- **PyTorch** y **OpenCV** para procesamiento de ML e imágenes
 
-## 📦 Instalación
+> **Nota:** los pesos de los modelos (`best.pt`, `best_float16.tflite`) no están incluidos por tamaño; la guía de configuración está en [SETUP_MODELS.md](SETUP_MODELS.md). El código del servidor FastAPI se configura en el directorio `api/backend/model/` descrito allí.
 
-### Prerequisitos
-- Node.js (≥ 18)
-- Python (≥ 3.8)
-- Git
+## Correr la app en local
 
-### 1. Clonar el repositorio
+### Requisitos
+- Node.js ≥ 18
+- Expo Go en el celular (o emulador Android/iOS)
+
+### Frontend
+
 ```bash
-git clone https://github.com/tu-usuario/recyclaideep.git
-cd recyclaideep
-```
-
-### 2. Configurar Frontend
-```bash
-# Instalar dependencias
+git clone https://github.com/FranciscoAguilarCuadra/APP_Tesis_rec.git
+cd APP_Tesis_rec
 npm install
-
-# Actualizar IP automáticamente
-npm run update-ip
-
-# Iniciar aplicación
-npm run dev
+npm run update-ip   # apunta la app a la IP de tu máquina
+npm run dev         # escanear QR con Expo Go
 ```
 
-### 3. Configurar Backend
+### Backend y modelos
+Sigue [SETUP_MODELS.md](SETUP_MODELS.md) para configurar el modelo YOLOv5 (backend) y los modelos TFLite/TFJS (offline).
+
 ```bash
-# Navegar al directorio del backend
-cd api/backend/model
-
-# Instalar dependencias Python
-pip install -r requirements.txt
-
-# Clonar YOLOv5 (requerido)
-git clone https://github.com/ultralytics/yolov5.git
-
-# Descargar modelo (necesario - no incluido en repo)
-# Coloca tu archivo best.pt en este directorio
-
-# Iniciar servidor
 uvicorn main:app --host 0.0.0.0 --port 5000
 ```
 
-## 🎯 Uso
-
-1. **Inicia el backend**: `uvicorn main:app --host 0.0.0.0 --port 5000`
-2. **Inicia la app**: `npm run dev`
-3. **Abre en tu dispositivo**: Escanea el QR con Expo Go
-4. **Toma fotos**: Usa la cámara para detectar residuos
-5. **Ve resultados**: Recibe clasificación y sugerencias
-
-## 📁 Estructura del Proyecto
+## Estructura del proyecto
 
 ```
-recyclaideep/
-├── app/                    # Pantallas principales
-│   ├── (tabs)/            # Navegación por pestañas
-│   ├── _layout.tsx        # Layout raíz
-│   └── result.tsx         # Pantalla de resultados
-├── api/                   # Backend API
-│   └── backend/model/     # Servidor FastAPI + YOLOv5
-├── assets/                # Recursos estáticos
-│   ├── images/           # Imágenes de la app
-│   └── model/            # Modelos ML (no incluidos)
-├── components/            # Componentes reutilizables
-├── constants/             # Configuraciones
-├── services/              # Lógica de API y ML
-└── utils/                 # Utilidades
+APP_Tesis_rec/
+├── app/            # Pantallas (Expo Router, navegación por pestañas)
+├── assets/         # Imágenes y modelos ML (no incluidos, ver SETUP_MODELS.md)
+├── components/     # Componentes reutilizables
+├── constants/      # Configuración (API_URL, etc.)
+├── data/           # Datos de apoyo
+├── hooks/          # Hooks personalizados
+├── services/       # Lógica de API y ML
+├── scripts/        # Scripts de mantenimiento
+└── utils/          # Utilidades
 ```
 
-## 🔧 Configuración
+## Despliegue
 
-### Variables de entorno
-El archivo `constants/config.ts` contiene:
-```typescript
-export const API_URL = 'http://TU_IP:5000';
-```
+- **Frontend:** builds con [EAS](https://docs.expo.dev/build/introduction/) (`eas build`) para Android/iOS.
+- **Backend:** Docker o servidor cloud (AWS/GCP). Ver comandos en [SETUP_MODELS.md](SETUP_MODELS.md).
 
-### Modelos necesarios
-- `best.pt` - Modelo YOLOv5 entrenado (no incluido)
-- `best_float16.tflite` - Modelo TensorFlow Lite (no incluido)
+## Modelos y experimentación
 
-## 🚀 Despliegue
+El entrenamiento y la comparación de los tres modelos (YOLOv5, Faster R-CNN, DETR) está documentado en **[Repositorio_Tesis](https://github.com/FranciscoAguilarCuadra/Repositorio_Tesis)**.
 
-### Frontend (Expo)
-```bash
-# Build para producción
-npx expo build
+## Licencia
 
-# Publish to Expo
-npx expo publish
-```
+MIT — ver archivo [LICENSE](LICENSE).
 
-### Backend
-```bash
-# Usando Docker
-docker build -t recyclaideep-api .
-docker run -p 5000:5000 recyclaideep-api
+## Autor
 
-# O usando servicios cloud (AWS, GCP, etc.)
-```
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una branch (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la branch (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## 👥 Autores
-
-- **Tu Nombre** - *Desarrollo inicial* - [tu-usuario](https://github.com/tu-usuario)
-
-## 🙏 Agradecimientos
-
-- YOLOv5 por el modelo base de detección
-- Expo team por el framework móvil
-- FastAPI por el framework backend
-- Comunidad open source
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Francisco Aguilar Cuadra** — Ingeniero Civil Informático, Universidad del Bío-Bío (2025)
+[GitHub](https://github.com/FranciscoAguilarCuadra) · [LinkedIn](https://linkedin.com/in/francisco-aguilar-cuadra)
