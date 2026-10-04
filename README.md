@@ -7,7 +7,6 @@
 [![Expo](https://img.shields.io/badge/Expo-000000?style=flat-square&logo=expo&logoColor=white)](https://expo.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![YOLOv5](https://img.shields.io/badge/YOLOv5-1a73e8?style=flat-square)](https://github.com/ultralytics/yolov5)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 <!--
 ## Capturas
@@ -27,7 +26,7 @@ Coloca las imágenes en `docs/screenshots/` y descomenta:
 - **Modo Online/Offline:** funciona contra la API backend o con el modelo local en el dispositivo.
 - **Mapa de puntos limpios:** encuentra centros de reciclaje cercanos.
 - **Sistema de recompensas:** gamificación para incentivar el reciclaje.
-- **Interfaz moderna:** UI/UX con React Native, Expo Router y Tailwind (NativeWind).
+- **Interfaz moderna:** UI/UX con React Native y Expo Router.
 
 ## Stack tecnológico
 
@@ -91,10 +90,6 @@ APP_Tesis_rec/
 ## Modelos y experimentación
 
 El entrenamiento y la comparación de los tres modelos (YOLOv5, Faster R-CNN, DETR) está documentado en **[Repositorio_Tesis](https://github.com/FranciscoAguilarCuadra/Repositorio_Tesis)**.
-
-## Licencia
-
-MIT — ver archivo [LICENSE](LICENSE).
 
 ## Autor
 
